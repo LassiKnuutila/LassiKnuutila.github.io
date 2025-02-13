@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worst UI Ever</title>
+    <style>
+        body {
+            background-color: yellow;
+            font-family: Comic Sans MS, cursive;
+            color: lime;
+            text-align: center;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .button {
+            position: absolute;
+            background-color: red;
+            color: white;
+            font-size: 24px;
+            padding: 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .fake-button {
+            background-color: purple;
+        }
+
+        .fake-button2 {
+            background-color: orange;
+        }
+
+        .fake-button3 {
+            background-color: teal;
+        }
+
+        .fake-button4 {
+            background-color: pink;
+        }
+
+        .random-text {
+            font-size: 30px;
+            font-weight: bold;
+            animation: annoyingText 1s infinite;
+        }
+
+        @keyframes annoyingText {
+            0% { color: red; font-size: 20px; }
+            50% { color: blue; font-size: 40px; }
+            100% { color: green; font-size: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="random-text">Welcome to the Worst UI Ever!</h1>
+
+    <script>
+        // Set interval to show an alert periodically
+        setInterval(() => {
+            alert("Are you sure you want to be here?");
+        }, 3000);
+
+        // Function to spawn fake buttons at random positions
+        function spawnFakeButton(buttonClass) {
+            const button = document.createElement("button");
+            button.classList.add("button", buttonClass);
+
+            // Random positions
+            button.style.top = Math.random() * 80 + "vh"; // 80% of the screen height
+            button.style.left = Math.random() * 80 + "vw"; // 80% of the screen width
+
+            button.textContent = "Klikkaa minua!";  // Fake buttons text
+            button.onclick = () => showError(buttonClass);
+
+            document.body.appendChild(button);
+        }
+
+        // Function to show error on clicking fake buttons
+        function showError(buttonName) {
+            alert(buttonName + " clicked! Error: You can't do that!");
+        }
+
+        // Function to spawn the real button (with a much lower chance of appearing)
+        function spawnRealButton() {
+            if (Math.random() < 0.2) { // Only 20% chance of showing real button
+                const button = document.createElement("button");
+                button.classList.add("button");
+                button.style.top = Math.random() * 80 + "vh";
+                button.style.left = Math.random() * 80 + "vw";
+                button.textContent = "Klikkaa minua!";  // Real button text
+                button.onclick = () => window.location.href = 'paska2.html';
+
+                document.body.appendChild(button);
+            }
+        }
+
+        // Spawn fake buttons randomly
+        for (let i = 0; i < 4; i++) {
+            setTimeout(() => spawnFakeButton("fake-button" + (i + 1)), Math.random() * 3000);
+        }
+
+        // Periodically try to spawn the real button
+        setInterval(spawnRealButton, 5000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annoying Signup</title>
+    <style>
+        body {
+            background: radial-gradient(circle, red, blue, yellow);
+            font-family: Comic Sans MS, cursive;
+            color: lime;
+            text-align: center;
+        }
+        .signup-box {
+            margin-top: 50px;
+            background: cyan;
+            padding: 20px;
+            display: inline-block;
+            border: 10px dotted purple;
+        }
+        input {
+            font-size: 18px;
+            margin: 10px;
+            background: pink;
+            border: 5px solid orange;
+            width: 80%;
+            animation: shake 0.5s infinite alternate;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(10px); }
+        }
+        button {
+            font-size: 22px;
+            background: black;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: white;
+            color: black;
+            transform: scale(1.5) rotate(720deg);
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Up... If You Dare!</h1>
+    <div class="signup-box">
+        <p>Good luck filling this out!</p>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="email" id="email" placeholder="Email"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <input type="password" id="confirm-password" placeholder="Confirm Password"><br>
+        <input type="text" id="maiden-name" placeholder="Mother's Maiden Name"><br>
+        <input type="text" id="favorite-smell" placeholder="Favorite Smell"><br>
+        <input type="text" id="least-favorite-shape" placeholder="Least Favorite Shape"><br>
+        <input type="text" id="pet-middle-name" placeholder="First Pet's Middle Name"><br>
+        <input type="text" id="embarrassing-moment" placeholder="Your Most Embarrassing Moment"><br>
+        <button onclick="confirmDetails(event)">Sign Up</button>
+        <p>Already have an account? <a href="annoying-login.html">Go back to login</a></p>
+    </div>
+    <script>
+        setInterval(() => {
+            alert("Are you sure you want to sign up?");
+        }, 4000);
+
+        function confirmDetails(event) {
+            // Get values
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirm-password").value;
+            let maidenName = document.getElementById("maiden-name").value;
+            let favoriteSmell = document.getElementById("favorite-smell").value;
+            let leastFavoriteShape = document.getElementById("least-favorite-shape").value;
+            let petMiddleName = document.getElementById("pet-middle-name").value;
+            let embarrassingMoment = document.getElementById("embarrassing-moment").value;
+
+            // Validate email, password length, and confirm password
+            if (!email.includes('@')) {
+                alert("Email must contain '@'!");
+                event.preventDefault();
+                return;
+            }
+
+            if (password.length !== 25) {
+                alert("Password must be exactly 25 characters long!");
+                event.preventDefault();
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Password and Confirm Password must match!");
+                event.preventDefault();
+                return;
+            }
+
+            // Gather details for confirmation
+            let details = [
+                "Username: " + username,
+                "Email: " + email,
+                "Password: " + password,
+                "Confirm Password: " + confirmPassword,
+                "Mother's Maiden Name: " + maidenName,
+                "Favorite Smell: " + favoriteSmell,
+                "Least Favorite Shape: " + leastFavoriteShape,
+                "First Pet's Middle Name: " + petMiddleName,
+                "Most Embarrassing Moment: " + embarrassingMoment
+            ];
+
+            // Ask for confirmation
+            let confirmation = confirm("Please confirm all details before proceeding:\n\n" + details.join("\n"));
+            if (!confirmation) {
+                alert("Too bad, try again!");
+                clearFields();  
+                event.preventDefault();
+                return;
+            } else {
+                setTimeout(() => {
+                    if (Math.random() < 0.1) {  // 10% chance of success
+                        alert("Pääsit läpi!!!");
+                        window.location.href = "success.html";  // Redirect on success
+                    } else {
+                        alert("Oops! Something went wrong, try again.");
+                        clearFields();  
+                    }
+                }, Math.random() * 3000 + 2000);
+            }
+        }
+
+        function clearFields() {
+            document.getElementById("username").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("confirm-password").value = "";
+            document.getElementById("maiden-name").value = "";
+            document.getElementById("favorite-smell").value = "";
+            document.getElementById("least-favorite-shape").value = "";
+            document.getElementById("pet-middle-name").value = "";
+            document.getElementById("embarrassing-moment").value = "";
+        }
+    </script>
+</body>
+</html>
