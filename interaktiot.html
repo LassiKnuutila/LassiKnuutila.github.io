@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktiiviset ominaisuudet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            color: black;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+        }
+        label, input, textarea, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="greeting"></h1>
+        <button id="darkModeToggle">Pimeä tila päälle/pois</button>
+        <h2>Yhteydenottolomake</h2>
+        <form id="contactForm">
+            <label for="name">Nimi:</label>
+            <input type="text" id="name" required>
+            
+            <label for="email">Sähköposti:</label>
+            <input type="email" id="email" required>
+            
+            <label for="message">Viesti (vähintään 10 merkkiä):</label>
+            <textarea id="message" minlength="10" required></textarea>
+            
+            <button type="submit">Lähetä</button>
+        </form>
+        <p id="formMessage"></p>
+    </div>
+
+    <script>
+        // Pimeä tila -vaihtoehto
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+        });
+
+        // Dynaaminen tervehdys
+        function updateGreeting() {
+            const greeting = document.getElementById('greeting');
+            const hour = new Date().getHours();
+            let message = "";
+
+            if (hour < 12) {
+                message = "Hyvää huomenta!";
+            } else if (hour < 18) {
+                message = "Hyvää päivää!";
+            } else {
+                message = "Hyvää iltaa!";
+            }
+            greeting.textContent = message;
+        }
+        updateGreeting();
+
+        // Yhteydenottolomakkeen validointi
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const formMessage = document.getElementById('formMessage');
+
+            if (!name || !email.includes('@') || message.length < 10) {
+                formMessage.textContent = "Tarkista lomakkeen tiedot!";
+                formMessage.style.color = "red";
+                return;
+            }
+            formMessage.textContent = "Lomake lähetetty onnistuneesti!";
+            formMessage.style.color = "green";
+            document.getElementById('contactForm').reset();
+        });
+    </script>
+</body>
+</html>
